@@ -110,11 +110,13 @@ for dataset in {eth,hotel,univ,zara1,zara2};
 
 As an example, you can train your model on ZARA1 by running:
 ```
-python code/train.py ethucy_exp/preprocess_zara1/ next-model/ethucy_single_model/zara1/ model --runId 2 --scene_h 51 --scene_w 64 --person_feat_path next-data/ethucy_personboxfeat/zara1/
+python code/train.py ethucy_exp/preprocess_zara1/ next-model/ethucy_single_model/zara1/ model --runId 2  \
+--scene_h 51 --scene_w 64 --person_feat_path next-data/ethucy_personboxfeat/zara1/
 ```
 Please refer to the code/paper for more training options.
 
 Similar for testing:
 ```
-python code/test.py ethucy_exp/preprocess_zara1/ next-model/ethucy_single_model/zara1/ model --runId 2 --scene_h 51 --scene_w 64 --person_feat_path next-data/ethucy_personboxfeat/zara1/
+python code/test.py ethucy_exp/preprocess_zara1/ next-model/ethucy_single_model/zara1/ model --runId 2  \
+--scene_h 51 --scene_w 64 --person_feat_path next-data/ethucy_personboxfeat/zara1/
 ```
