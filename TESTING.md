@@ -2,6 +2,7 @@
 ## Step 1: Prepare the data and model
 We experimented on the [ActEv dataset](https://actev.nist.gov) and the
 [ETH & UCY dataset](https://graphics.cs.ucy.ac.cy/research/downloads/crowd-data).
+The original ActEv annotations can be downloaded from [here](https://next.cs.cmu.edu/data/actev-v1-drop4-yaml.tgz).
 *Please do obtain the data copyright and download the raw videos from their website.*
 You can download our prepared features from the [project page](https://next.cs.cmu.edu)
 by running the script `bash scripts/download_prepared_data.sh`.

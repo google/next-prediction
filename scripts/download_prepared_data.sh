@@ -18,9 +18,9 @@
 
 mkdir -p next-data
 
-wget https://aladdin1.inf.cs.cmu.edu/PeekingFuture/data/final_annos.tgz -O next-data/final_annos.tgz
-wget https://aladdin1.inf.cs.cmu.edu/PeekingFuture/data/person_features/actev_personboxfeat.tgz -O next-data/actev_personboxfeat.tgz
-wget https://aladdin1.inf.cs.cmu.edu/PeekingFuture/data/person_features/ethucy_personboxfeat.tgz -O next-data/ethucy_personboxfeat.tgz
+wget https://next.cs.cmu.edu/data/final_annos.tgz -O next-data/final_annos.tgz
+wget https://next.cs.cmu.edu/data/person_features/actev_personboxfeat.tgz -O next-data/actev_personboxfeat.tgz
+wget https://next.cs.cmu.edu/data/person_features/ethucy_personboxfeat.tgz -O next-data/ethucy_personboxfeat.tgz
 
 # extract and delete the tar files
 cd next-data
