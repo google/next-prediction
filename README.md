@@ -43,14 +43,14 @@ e.g. the yellow path for “loading” and the green path for “object transfer
 <div align="center">
   <img src="images/title_image.png" width="700px" />
   <br/>
-  <div style="height:200px">
-    <div style="height:200px;float:left;margin-right:20px">
+  <div style="">
+    <div style="height:120px;float:left;margin-right:20px">
       <img src="images/VIRAT_S_040000_08_001084_001190.crop.gif" style="width:100%;height:100%" />
     </div>
-    <div style="height:200px;float:left;margin-right:20px">
+    <div style="height:120px;float:left;margin-right:20px">
       <img src="images/VIRAT_S_040102_06_000849_000908.crop.gif" style="width:100%;height:100%" />
     </div>
-    <div style="height:200px;float:left;margin-right:20px">
+    <div style="height:120px;float:left;margin-right:20px">
       <img src="images/VIRAT_S_000007.crop.gif" style="width:100%;height:100%" />
     </div>
     <div style="clear:both"></div>
