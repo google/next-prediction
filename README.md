@@ -18,11 +18,12 @@ You can find more information at our [Project Page](https://next.cs.cmu.edu/).\
 If you find this code useful in your research then please cite
 
 ```
-@inproceedings{liang2019peekingfuture,
-  title={Peeking into the Future: Predicting Future Person Activities and Locations in Videos},
-  author={Junwei Liang and Lu Jiang and Juan Carlos Niebles and Alexander G. Hauptmann and Li Fei-Fei},
-  booktitle={CVPR},
-  year={2019}
+@InProceedings{Liang_2019_CVPR,
+  author = {Liang, Junwei and Jiang, Lu and Carlos Niebles, Juan and Hauptmann, Alexander G. and Fei-Fei, Li},
+  title = {Peeking Into the Future: Predicting Future Person Activities and Locations in Videos},
+  booktitle = {The IEEE Conference on Computer Vision and Pattern Recognition (CVPR)},
+  month = {June},
+  year = {2019}
 }
 ```
 
