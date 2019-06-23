@@ -13,7 +13,7 @@ about 31 GB of disk space:
 annotations for both experiments. In ActEv experiments, it includes
 person appearance features, person keypoint features, scene semantic
 features and scene object features. In ETH/UCY, person keypoint features
-are not used.
+are not used. Data format notes are [here](NOTES.md#prepared-data).
 - `next-data/actev_personboxfeat/`: This folder includes person appearance
 features for ActEv experiments
 - `next-data/ethucy_personboxfeat/`: This folder includes person appearance

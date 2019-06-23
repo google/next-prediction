@@ -10,7 +10,7 @@ This will download the following data,
 and will require about 31 GB of disk space:
 
 - `next-data/final_annos/`: This folder includes extracted features and
-annotations for both experiments.
+annotations for both experiments. Data format notes are [here](NOTES.md#prepared-data).
 - `next-data/actev_personboxfeat/`: This folder includes person appearance
 features for ActEv experiments
 - `next-data/ethucy_personboxfeat/`: This folder includes person appearance
