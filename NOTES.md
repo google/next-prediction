@@ -13,5 +13,5 @@ this_other_box.append(other_box_pickle[key][0])
 this_other_box_class.append(other_box_pickle[key][1])
 ```
 - `ade20k_out_36_64/`: This folder includes extracted downsized scene semantic segmentation features. We only keep one frame every 30 frames to save computation and disk space. During preprocessing, the closest frame's feature will be used according to the mappings in `anno_scene/`.
-
+- `person_boxkey2id.p`: This pickle file includes mappings from `${videoname}_${framenum}_${person_id}` to person_appearance_feature_id. You can then get each person's appearance feature from `next-data/actev_personboxfeat/${data_split}/${person_appearance_feature_id}.npy`, which is a numpy array of shape [1, 9, 5, 256].
 
