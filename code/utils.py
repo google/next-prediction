@@ -142,6 +142,7 @@ def process_args(args):
         ["static", 0],
         ["mov", 1],
     ]
+    args.scenes = ["0000", "0002", "0400", "0401", "0500"]
 
   args.num_act = len(activity2id.keys())  # include the BG class
 
@@ -359,6 +360,13 @@ def read_data(args, data_type):
   return Dataset(data, data_type, shared=shared, config=args)
 
 
+def get_scene(videoname_):
+  """Get the scene camera from the ActEV videoname."""
+  s = videoname_.split("_S_")[-1]
+  s = s.split("_")[0]
+  return s[:4]
+
+
 def evaluate(dataset, config, sess, tester):
   """Evaluate the dataset using the tester model.
 
@@ -377,6 +385,10 @@ def evaluate(dataset, config, sess, tester):
   # show the evaluation per trajectory class if actev experiment
   if config.is_actev:
     l2dis_cats = [[] for i in xrange(len(config.traj_cats))]
+    # added 06/2019,
+    # show per-scene ADE/FDE for ActEV dataset
+    # for leave-one-scene-out experiment
+    l2dis_scenes = [[] for i in xrange(len(config.scenes))]
 
   grid1_acc = None
   grid2_acc = None
@@ -462,6 +474,12 @@ def evaluate(dataset, config, sess, tester):
       if config.is_actev:
         traj_cat_id = batch.data["trajidx2catid"][i]
         l2dis_cats[traj_cat_id].append(diff)  # [T2]
+        # per-scene eval
+        traj_key = batch.data["traj_key"][i]  # videoname_frameidx_personid
+        # videoname has '_'
+        videoname = traj_key[::-1].split("_", 2)[-1][::-1]
+        scene = get_scene(videoname)  # 0000/0002, etc.
+        l2dis_scenes[config.scenes.index(scene)].append(diff)
 
     l2dis += d
 
@@ -506,6 +524,7 @@ def evaluate(dataset, config, sess, tester):
   # show ade and fde for different traj category
   if config.is_actev:
 
+    # per-traj-class eval
     for cat_id, (cat_name, _) in enumerate(config.traj_cats):
       diffs = l2dis_cats[cat_id]
       ade = [t for l in diffs for t in l]
@@ -514,6 +533,17 @@ def evaluate(dataset, config, sess, tester):
           ("%s_ade" % cat_name): np.mean(ade),
           ("%s_fde" % cat_name): np.mean(fde),
       })
+
+    # per-scene eval
+    for scene_id, scene in enumerate(config.scenes):
+      diffs = l2dis_scenes[scene_id]
+      ade = [t for l in diffs for t in l]
+      fde = [l[-1] for l in diffs]
+      p.update({
+          ("%s_ade" % scene): np.mean(ade),
+          ("%s_fde" % scene): np.mean(fde),
+      })
+
   return p
 
 

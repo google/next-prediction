@@ -164,10 +164,12 @@ def main(args):
     # get_batches is a generator, run on the fly
 
     print(" batch_size:%s, epoch:%s, %s step every epoch, total step:%s,"
-          " eval/save every %s steps" % (args.batch_size, args.num_epochs,
-                                           math.ceil(train_data.num_examples/
-                                                     float(args.batch_size)),
-                                           num_steps, args.save_period))
+          " eval/save every %s steps" % (args.batch_size,
+                                         args.num_epochs,
+                                         math.ceil(train_data.num_examples/
+                                                   float(args.batch_size)),
+                                         num_steps,
+                                         args.save_period))
 
     metric = "ade"  # average displacement error # smaller better
     # remember the best eval acc during training

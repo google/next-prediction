@@ -68,7 +68,7 @@ and locations prediction.
 </div>
 
 ## Dependencies
-+ Python 2.7; TensorFlow == 1.10.0
++ Python 2.7; TensorFlow == 1.10.0 (Should also work with 1.14+)
 
 ## Pretrained Models
 You can download pretrained models by running the script
