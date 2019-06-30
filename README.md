@@ -87,5 +87,8 @@ Instructions for testing pretrained models can be [found here](TESTING.md).
 ## Training new models
 Instructions for training new models can be [found here](TRAINING.md).
 
+## Preparing Rich Visual Features
+Coming soon.
+
 ## Acknowledgments
 The preprecessing code and evaluation code for trajectories were adapted from [Social-GAN](https://github.com/agrimgupta92/sgan).
