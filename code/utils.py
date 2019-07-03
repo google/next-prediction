@@ -540,8 +540,8 @@ def evaluate(dataset, config, sess, tester):
       ade = [t for l in diffs for t in l]
       fde = [l[-1] for l in diffs]
       p.update({
-          ("%s_ade" % scene): np.mean(ade),
-          ("%s_fde" % scene): np.mean(fde),
+          ("%s_ade" % scene): np.mean(ade) if ade else 0.0,
+          ("%s_fde" % scene): np.mean(fde) if fde else 0.0,
       })
 
   return p
