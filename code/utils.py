@@ -513,12 +513,13 @@ def evaluate(dataset, config, sess, tester):
   if config.multi_decoder:
     p.update({
         "traj_class_accuracy":
-            sum(traj_class_correct)*1.0/len(traj_class_correct),
+            np.mean(traj_class_correct) if traj_class_correct else 0.0,
     })
     for i in xrange(len(config.traj_cats)):
       p.update({
           ("traj_class_accuracy_%s" % i):
-              sum(traj_class_correct_cat[i])*1.0/len(traj_class_correct_cat[i]),
+              np.mean(traj_class_correct_cat[i]) if traj_class_correct_cat[i]
+              else 0.0,
       })
 
   # show ade and fde for different traj category
@@ -530,8 +531,8 @@ def evaluate(dataset, config, sess, tester):
       ade = [t for l in diffs for t in l]
       fde = [l[-1] for l in diffs]
       p.update({
-          ("%s_ade" % cat_name): np.mean(ade),
-          ("%s_fde" % cat_name): np.mean(fde),
+          ("%s_ade" % cat_name): np.mean(ade) if ade else 0.0,
+          ("%s_fde" % cat_name): np.mean(fde) if fde else 0.0,
       })
 
     # per-scene eval
