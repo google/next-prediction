@@ -14,6 +14,8 @@ This repository contains the code and models for the following paper:
 You can find more information at our [Project Page](https://next.cs.cmu.edu/).\
 *Please note that this is not an officially supported Google product.*
 
++ *[04/2020] A [Social Distancing Early Warning](https://github.com/JunweiLiang/social-distancing-prediction) system based on this work is open-sourced.*
++ *[02/2020] [New paper](https://next.cs.cmu.edu/multiverse/) on multi-future trajectory prediction is accepted by CVPR 2020.*
 
 If you find this code useful in your research then please cite
 
