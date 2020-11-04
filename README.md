@@ -70,6 +70,7 @@ and locations prediction.
 
 ## Dependencies
 + Python 2.7; TensorFlow == 1.10.0 (Should also work on 1.14+)
++ [10/2020] Now it is compatible with Python 3.6 and Tensorflow 1.15
 
 ## Pretrained Models
 You can download pretrained models by running the script

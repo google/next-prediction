@@ -261,7 +261,7 @@ def read_data(args, data_type):
 
   data_path = os.path.join(args.prepropath, "data_%s.npz" % data_type)
 
-  data = dict(np.load(data_path))
+  data = dict(np.load(data_path, allow_pickle=True))
 
   # save some shared feature first
 
@@ -276,7 +276,7 @@ def read_data(args, data_type):
   else:
     args.box_img_w, args.box_img_h = 1920, 1080
 
-  for i in xrange(len(args.scene_grid_strides)):
+  for i in range(len(args.scene_grid_strides)):
     shares.append("grid_center_%d" % i)
 
   for key in data:
@@ -335,7 +335,7 @@ def read_data(args, data_type):
 
     data["traj_key"] = []
     cat_count = [[cat_name, 0] for cat_name, _ in args.traj_cats]
-    for i in xrange(num_examples):
+    for i in range(num_examples):
       cur_acts = data["cur_activity"][i]
       cat_id = get_traj_cat(cur_acts, args.traj_cats)
       data["trajidx2catid"][i] = cat_id
@@ -350,7 +350,7 @@ def read_data(args, data_type):
   else:
     data["traj_key"] = []
     boxid2key = shared["person_boxid2key"]
-    for i in xrange(num_examples):
+    for i in range(num_examples):
       # videoname_frameidx_personid
       key = boxid2key[data["obs_boxid"][i][0]]
       data["traj_key"].append(key)
@@ -384,11 +384,11 @@ def evaluate(dataset, config, sess, tester):
 
   # show the evaluation per trajectory class if actev experiment
   if config.is_actev:
-    l2dis_cats = [[] for i in xrange(len(config.traj_cats))]
+    l2dis_cats = [[] for i in range(len(config.traj_cats))]
     # added 06/2019,
     # show per-scene ADE/FDE for ActEV dataset
     # for leave-one-scene-out experiment
-    l2dis_scenes = [[] for i in xrange(len(config.scenes))]
+    l2dis_scenes = [[] for i in range(len(config.scenes))]
 
   grid1_acc = None
   grid2_acc = None
@@ -405,7 +405,7 @@ def evaluate(dataset, config, sess, tester):
 
   traj_class_correct = []
   if config.is_actev:
-    traj_class_correct_cat = [[] for i in xrange(len(config.traj_cats))]
+    traj_class_correct_cat = [[] for i in range(len(config.traj_cats))]
 
   for evalbatch in tqdm.tqdm(dataset.get_batches(config.batch_size, \
     full=True, shuffle=False), total=num_batches_per_epoch, ascii=True):
@@ -425,7 +425,7 @@ def evaluate(dataset, config, sess, tester):
     grid_pred_1 = np.argmax(grid_pred_1, axis=1)
     grid_pred_2 = np.argmax(grid_pred_2, axis=1)
 
-    for i in xrange(len(batch.data["pred_grid_class"])):
+    for i in range(len(batch.data["pred_grid_class"])):
       gt_grid1_pred_class = batch.data["pred_grid_class"][i][0, -1]
       gt_grid2_pred_class = batch.data["pred_grid_class"][i][1, -1]
 
@@ -434,10 +434,10 @@ def evaluate(dataset, config, sess, tester):
 
     if config.add_activity:
       # get the mean AP
-      for i in xrange(len(batch.data["future_activity_onehot"])):
+      for i in range(len(batch.data["future_activity_onehot"])):
         # [num_act]
         this_future_act_labels = batch.data["future_activity_onehot"][i]
-        for j in xrange(len(this_future_act_labels)):
+        for j in range(len(this_future_act_labels)):
           actid = j
           future_act_labels[actid].append(this_future_act_labels[j])
           # for checking AP using the cur act as
@@ -492,7 +492,7 @@ def evaluate(dataset, config, sess, tester):
     for actid in future_act_labels:
       list_ = [{"score": future_act_scores[actid][i],
                 "label": future_act_labels[actid][i]}
-               for i in xrange(len(future_act_labels[actid]))]
+               for i in range(len(future_act_labels[actid]))]
       ap = compute_ap(list_)
 
       act_ap.append(ap)
@@ -515,7 +515,7 @@ def evaluate(dataset, config, sess, tester):
         "traj_class_accuracy":
             np.mean(traj_class_correct) if traj_class_correct else 0.0,
     })
-    for i in xrange(len(config.traj_cats)):
+    for i in range(len(config.traj_cats)):
       p.update({
           ("traj_class_accuracy_%s" % i):
               np.mean(traj_class_correct_cat[i]) if traj_class_correct_cat[i]
@@ -615,8 +615,8 @@ class Dataset(object):
 
     # all batches idxs from multiple epochs
     batch_idxs_iter = itertools.chain.from_iterable(
-        grouped() for _ in xrange(num_epochs))
-    for _ in xrange(num_steps):  # num_step should be batch_idxs length
+        grouped() for _ in range(num_epochs))
+    for _ in range(num_steps):  # num_step should be batch_idxs length
       # so in the end batch, the None will not included
       batch_idxs = tuple(i for i in next(batch_idxs_iter)
                          if i is not None)  # each batch idxs
@@ -628,7 +628,7 @@ class Dataset(object):
         pad = batch_idxs[-1]
         batch_idxs = tuple(
             list(batch_idxs) + [pad for i in
-                                xrange(batch_size - len(batch_idxs))])
+                                range(batch_size - len(batch_idxs))])
 
       # get the actual data based on idx
       batch_data = self.get_by_idxs(batch_idxs)
@@ -644,8 +644,8 @@ class Dataset(object):
       new_obs_scene = np.zeros((config.batch_size, config.obs_len, 1),
                                dtype="int32")
 
-      for i in xrange(len(batch_data["obs_scene"])):
-        for j in xrange(len(batch_data["obs_scene"][i])):
+      for i in range(len(batch_data["obs_scene"])):
+        for j in range(len(batch_data["obs_scene"][i])):
           oldid = batch_data["obs_scene"][i][j][0]
           if oldid not in oldid2newid:
             oldid2newid[oldid] = len(oldid2newid.keys())
@@ -670,7 +670,10 @@ class Dataset(object):
 
 def grouper(lst, num):
   args = [iter(lst)]*num
-  out = itertools.izip_longest(*args, fillvalue=None)
+  if sys.version_info > (3, 0):
+    out = itertools.zip_longest(*args, fillvalue=None)
+  else:
+    out = itertools.izip_longest(*args, fillvalue=None)
   out = list(out)
   return out
 

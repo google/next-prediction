@@ -18,6 +18,7 @@ from __future__ import print_function
 
 """Model graph definitions and other functions for training and testing."""
 
+import functools
 import math
 import operator
 import os
@@ -203,7 +204,7 @@ class Model(object):
     if config.multi_decoder:
       dec_cell_traj = [tf.nn.rnn_cell.LSTMCell(
           config.dec_hidden_size, state_is_tuple=True, name='dec_traj_%s' % i)
-                       for i in xrange(len(config.traj_cats))]
+                       for i in range(len(config.traj_cats))]
       dec_cell_traj = [tf.nn.rnn_cell.DropoutWrapper(
           one, keep_prob) for one in dec_cell_traj]
     else:
@@ -798,7 +799,7 @@ class Model(object):
       for j, xy in enumerate(obs_data):
         traj_obs_gt[i, j, :] = xy
         traj_obs_gt_mask[i, j] = True
-      for j in xrange(config.pred_len):
+      for j in range(config.pred_len):
         # used in testing to get the prediction length
         traj_pred_gt_mask[i, j] = True
     # ---------------------------------------
@@ -812,8 +813,8 @@ class Model(object):
     feed_dict[self.scene_feat] = data['batch_scene_feat']
 
     # each bacth
-    for i in xrange(len(data['batch_obs_scene'])):
-      for j in xrange(len(data['batch_obs_scene'][i])):
+    for i in range(len(data['batch_obs_scene'])):
+      for j in range(len(data['batch_obs_scene'][i])):
         # it was (1) shaped
         obs_scene[i, j] = data['batch_obs_scene'][i][j][0]
         obs_scene_mask[i, j] = True
@@ -821,7 +822,7 @@ class Model(object):
     # [N,num_scale, T] # each is int to num_grid_class
     for j, _ in enumerate(config.scene_grids):
       this_grid_label = np.zeros([N, T_in], dtype='int32')
-      for i in xrange(len(data['obs_grid_class'])):
+      for i in range(len(data['obs_grid_class'])):
         this_grid_label[i, :] = data['obs_grid_class'][i][j, :]
 
       feed_dict[self.grid_obs_labels[j]] = this_grid_label
@@ -851,8 +852,8 @@ class Model(object):
     obs_person_features = np.zeros(
         (N, T_in, person_h, person_w, person_feat_dim), dtype='float32')
 
-    for i in xrange(len(data['obs_boxid'])):
-      for j in xrange(len(data['obs_boxid'][i])):
+    for i in range(len(data['obs_boxid'])):
+      for j in range(len(data['obs_boxid'][i])):
         boxid = data['obs_boxid'][i][j]
         featfile = os.path.join(
             config.person_feat_path, split, '%s.npy' % boxid)
@@ -867,8 +868,8 @@ class Model(object):
         (N, T_in, K, config.num_box_class), dtype='float32')
     other_boxes = np.zeros((N, T_in, K, 4), dtype='float32')
     other_boxes_mask = np.zeros((N, T_in, K), dtype='bool')
-    for i in xrange(len(data['obs_other_box'])):
-      for j in xrange(len(data['obs_other_box'][i])):  # -> seq_len
+    for i in range(len(data['obs_other_box'])):
+      for j in range(len(data['obs_other_box'][i])):  # -> seq_len
         this_other_boxes = data['obs_other_box'][i][j]
         this_other_boxes_class = data['obs_other_box_class'][i][j]
 
@@ -911,7 +912,7 @@ class Model(object):
 
         this_grid_label = np.zeros([N], dtype='int32')
         this_grid_target = np.zeros([N, 2], dtype='float32')
-        for i in xrange(len(data['pred_grid_class'])):
+        for i in range(len(data['pred_grid_class'])):
           # last pred timestep
           this_grid_label[i] = data['pred_grid_class'][i][j, -1]
           # last pred timestep
@@ -926,7 +927,7 @@ class Model(object):
         future_act = np.zeros((N, config.num_act), dtype='uint8')
         # for experiment, training activity detection model
 
-        for i in xrange(len(data['future_activity_onehot'])):
+        for i in range(len(data['future_activity_onehot'])):
           future_act[i, :] = data['future_activity_onehot'][i]
 
         feed_dict[self.future_act_label] = future_act
@@ -935,7 +936,7 @@ class Model(object):
     feed_dict[self.traj_class_gt] = np.zeros((N), dtype='int32')
     if config.multi_decoder and is_train:
       traj_class = np.zeros((N), dtype='int32')
-      for i in xrange(len(data['traj_cat'])):
+      for i in range(len(data['traj_cat'])):
         traj_class[i] = data['traj_cat'][i]
       feed_dict[self.traj_class_gt] = traj_class
 
@@ -1034,7 +1035,7 @@ def flatten(tensor, keep):
   # each num in the [] will a*b*c*d...
   # so [0] -> just N here for left
   # for [N, M, JX, di] , left is N*M
-  left = reduce(operator.mul, [fixed_shape[i] or tf.shape(tensor)[i]
+  left = functools.reduce(operator.mul, [fixed_shape[i] or tf.shape(tensor)[i]
                                for i in range(start)])
   # [N, JQ,di]
   # [N*M, JX, di]

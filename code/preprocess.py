@@ -25,10 +25,12 @@ download_*.sh for downloading annotations.
 
 
 import argparse
-import cPickle as pickle
+#import cPickle as pickle
+import pickle
 import glob
 import json
 import os
+import sys
 import numpy as np
 from tqdm import tqdm
 
@@ -104,8 +106,8 @@ def main(args):
     args.scene_grid_centers = []
     for h, w in args.scene_grids:
       h_gap, w_gap = args.video_h*1.0/h, args.video_w*1.0/w
-      centers_x = np.cumsum([w_gap for _ in xrange(w)]) - w_gap/2.0
-      centers_y = np.cumsum([h_gap for _ in xrange(h)]) - h_gap/2.0
+      centers_x = np.cumsum([w_gap for _ in range(w)]) - w_gap/2.0
+      centers_y = np.cumsum([h_gap for _ in range(h)]) - h_gap/2.0
       centers_xx = np.tile(np.expand_dims(centers_x, axis=0), [h, 1])
       centers_yy = np.tile(np.expand_dims(centers_y, axis=1), [1, w])
       centers = np.stack((centers_xx, centers_yy), axis=-1)  # [H,W,2]
@@ -138,7 +140,7 @@ def main(args):
   # For creating the same boxid as previous experiment
   args.person_boxkey2id = None
   if args.person_boxkey2id_p is not None:
-    with open(args.person_boxkey2id_p, "r") as f:
+    with open(args.person_boxkey2id_p, "rb") as f:
       args.person_boxkey2id = pickle.load(f)
 
   prepro_each(args.traj_path, "train", os.path.join(
@@ -223,7 +225,8 @@ def prepro_each(traj_path, split, prepro_path, args):
     scene_oldid2new = {
         int(oldi): scene_oldid2new[oldi] for oldi in scene_oldid2new}
     # for background class or other class that we ignored
-    assert not scene_oldid2new.has_key(0)
+    #assert not scene_oldid2new.has_key(0)
+    assert 0 not in scene_oldid2new
     scene_oldid2new[0] = 0
     total_scene_class = len(scene_oldid2new)
     scene_id2name = scene_id2name["id2name"]
@@ -245,7 +248,17 @@ def prepro_each(traj_path, split, prepro_path, args):
     if args.add_kp:
       kp_file_path = os.path.join(args.kp_path, split, "%s.p" % videoname)
       with open(kp_file_path, "rb") as f:
-        kp_feats = pickle.load(f)
+
+        if sys.version_info.major == 2:
+          # this works for py2 since the pickle is generated with py2 code
+          kp_feats = pickle.load(f)
+        else:
+          # ugly so it is py3 compatitable
+          kp_feats = pickle.load(f, encoding="bytes")
+          new_kp_feats = {}
+          for k in kp_feats:
+            new_kp_feats[k.decode("utf-8")] = kp_feats[k]
+          kp_feats = new_kp_feats
 
     if args.add_scene:
       # get the frameid to file name since scene is not extracted every frames
@@ -690,7 +703,7 @@ def prepro_each(traj_path, split, prepro_path, args):
 
     traj_cat = np.zeros((len(cur_activity)), dtype="uint8")
     count_move = 0
-    for i in xrange(len(cur_activity)):
+    for i in range(len(cur_activity)):
       cur_acts = cur_activity[i]
       move = False
       for actid in cur_acts:
@@ -751,10 +764,11 @@ def prepro_each(traj_path, split, prepro_path, args):
       scene_feat = scene_feat_dict[key]  # [H,W]
       # transform classid first
       new_scene_feat = np.zeros_like(scene_feat)  # zero for background class
-      for i in xrange(scene_h):
-        for j in xrange(scene_w):
+      for i in range(scene_h):
+        for j in range(scene_w):
           # rest is ignored and all put into background
-          if scene_oldid2new.has_key(scene_feat[i, j]):
+          #if scene_oldid2new.has_key(scene_feat[i, j]):
+          if scene_feat[i, j] in scene_oldid2new:
             new_scene_feat[i, j] = scene_oldid2new[scene_feat[i, j]]
       # transform to masks
       this_scene_feat = np.zeros(
