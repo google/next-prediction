@@ -94,3 +94,7 @@ Instructions for extracting features can be [found here](https://github.com/Junw
 
 ## Acknowledgments
 The preprecessing code and evaluation code for trajectories were adapted from [Social-GAN](https://github.com/agrimgupta92/sgan).
+
+## PyTorch Implementation
+Checkout this [repo](https://github.com/HRHLALALA/next-prediction-pytorch) based on PyTorch by [HRHLALALA](https://github.com/HRHLALALA).
+
