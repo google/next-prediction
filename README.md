@@ -14,6 +14,7 @@ This repository contains the code and models for the following paper:
 You can find more information at our [Project Page](https://next.cs.cmu.edu/).\
 *Please note that this is not an officially supported Google product.*
 
++ *[11/2022] CMU server is down. You can replace all `https://next.cs.cmu.edu` with `https://precognition.team/next/` to download necessary resources.*
 + *[02/2020] [New paper](https://next.cs.cmu.edu/multiverse/) on multi-future trajectory prediction is accepted by CVPR 2020.*
 
 If you find this code useful in your research then please cite
