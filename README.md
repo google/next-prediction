@@ -4,18 +4,18 @@ This repository contains the code and models for the following paper:
 
 
 **[Peeking into the Future: Predicting Future Person Activities and Locations in Videos](https://arxiv.org/abs/1902.03748)** \
-[Junwei Liang](https://www.cs.cmu.edu/~junweil/),
+[Junwei Liang](https://junweiliang.me/),
 [Lu Jiang](http://www.lujiang.info/),
 [Juan Carlos Niebles](http://www.niebles.net/),
 [Alexander Hauptmann](https://www.cs.cmu.edu/~alex/),
 [Li Fei-Fei](http://vision.stanford.edu/feifeili/) \
 [CVPR 2019](http://cvpr2019.thecvf.com/)
 
-You can find more information at our [Project Page](https://next.cs.cmu.edu/).\
+You can find more information at our [Project Page](https://precognition.team/next).\
 *Please note that this is not an officially supported Google product.*
 
 + *[11/2022] CMU server is down. You can replace all `https://next.cs.cmu.edu` with `https://precognition.team/next/` to download necessary resources.*
-+ *[02/2020] [New paper](https://next.cs.cmu.edu/multiverse/) on multi-future trajectory prediction is accepted by CVPR 2020.*
++ *[02/2020] [New paper](https://precognition.team/next/multiverse/) on multi-future trajectory prediction is accepted by CVPR 2020.*
 
 If you find this code useful in your research then please cite
 

@@ -18,8 +18,12 @@
 
 mkdir -p next-models
 
-wget https://next.cs.cmu.edu/data/pretrained_models/actev_single_model.tar -O next-models/actev_single_model.tar
-wget https://next.cs.cmu.edu/data/pretrained_models/ethucy_single_model.tar -O next-models/ethucy_single_model.tar
+# [02/2023] CMU server is down. Switching to our HKUST (Guangzhou) Precognition lab server
+#wget https://next.cs.cmu.edu/data/pretrained_models/actev_single_model.tar -O next-models/actev_single_model.tar
+#wget https://next.cs.cmu.edu/data/pretrained_models/ethucy_single_model.tar -O next-models/ethucy_single_model.tar
+
+wget https://precognition.team/next/data/pretrained_models/actev_single_model.tar -O next-models/actev_single_model.tar
+wget https://precognition.team/next/data/pretrained_models/ethucy_single_model.tar -O next-models/ethucy_single_model.tar
 
 # extract and delete the tar files
 cd next-models
